@@ -1,1 +1,1 @@
-# Bun, Hono & TS Projects
+# TS Projects
