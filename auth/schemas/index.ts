@@ -10,3 +10,7 @@ export const LoginSchema = z.object({
   email: z.string().email({ message: "Invalid Email" }),
   password: z.string().min(1, { message: "Invalid password" }),
 });
+
+export const ResetSchema = z.object({
+  email: z.string().email({ message: "Invalid Email" }),
+});
