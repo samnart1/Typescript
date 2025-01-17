@@ -9,6 +9,7 @@ export const RegisterSchema = z.object({
 export const LoginSchema = z.object({
   email: z.string().email({ message: "Invalid Email" }),
   password: z.string().min(1, { message: "Invalid password" }),
+  code: z.optional(z.string()),
 });
 
 export const ResetSchema = z.object({
