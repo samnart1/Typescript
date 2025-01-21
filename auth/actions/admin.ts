@@ -6,9 +6,9 @@ import { UserRole } from "@prisma/client";
 export const admin = async () => {
   const role = await currentRole();
 
-  if (role === UserRole.ADMIN) {
-    return { error: "Forbidden!" };
+  if (role != UserRole.ADMIN) {
+    return { error: "Forbidden Server Access!" };
   }
 
-  return { success: "Allowed!" };
+  return { success: "Allowed Server Access!" };
 };
