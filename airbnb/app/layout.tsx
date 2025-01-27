@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import "./globals.css";
 import { Nunito } from "next/font/google";
-import Navbar from "./components/navbar/page";
+import Navbar from "./components/navbar/Navbar";
 
 export const metadata: Metadata = {
   title: "Airbnb",
