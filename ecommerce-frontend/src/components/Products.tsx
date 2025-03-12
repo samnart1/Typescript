@@ -1,9 +1,9 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "./ProductCard";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { useEffect } from "react";
-import { fetchProducts } from "../store/action";
-import { RootState, AppDispatch } from "../store/types";
+import fetchProducts from "../store/action";
+import { RootState } from "../store/reducer/store";
 
 interface Product {
     productId: number;
@@ -16,25 +16,20 @@ interface Product {
     specialPrice: number;
 }
 
-const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
-const useTypedDispatch = () => useDispatch<AppDispatch>();
-
 const Products = () => {
-    const isLoading = useTypedSelector((state) => state.products);
-
-    const errorMessage = useTypedSelector(
-        (state) => state.products
-    );
-
-    const products: Product[] = useTypedSelector(
-        (state) => state.products || []
-    );
-
-    const dispatch = useTypedDispatch();
+    const isLoading = false;
+    const errorMessage = "";
+    const reduxState = useSelector((state) => state);
+    console.log(reduxState);
+    
+    const { products } = useSelector((state: RootState) => state.products);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchProducts());
-    })
+    }, [dispatch]);
+
+    console.log("Redux products state: ", products);
 
     // const products = [
     //     {

@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { ProductReducer } from "./ProductReducer";
+import productReducer from "./ProductReducer";
+import { thunk } from "redux-thunk";
 
-export const store = configureStore({
+const store = configureStore({
     reducer: {
-        products: ProductReducer,
+        products: productReducer,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
     preloadedState: {},
 });
+
+export type RootState = ReturnType<typeof store.getState>;
 
 export default store;

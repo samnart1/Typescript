@@ -1,29 +1,39 @@
-import { FETCH_PRODUCTS_SUCCESS, ProductActions } from "../action";
-
 const initialState = {
-    products: null,
+    products: [],
     categories: null,
     pagination: {},
 };
 
-export const ProductReducer = (
-    state = initialState,
-    action: ProductActions
-) => {
+interface actionProps {
+    type: string;
+    content: string[];
+    pageNumber: number;
+    pageSize: number;
+    totalElements: number;
+    totalPages: number;
+    lastPage: boolean;
+}
+
+const productReducer = (state = initialState, action: actionProps) => {
     switch (action.type) {
-        case FETCH_PRODUCTS_SUCCESS:
+        case "FETCH_PRODUCTS":
             return {
                 ...state,
-                products: action.payload.products,
+                products: action.content,
                 pagination: {
-                    pageNumber: action.payload.pageNumber,
-                    pageSize: action.payload.pageSize,
-                    totalElements: action.payload.totalElements,
-                    totalPages: action.payload.totalPages,
-                    lastPage: action.payload.lastPage,
+                    pageNumber: action.pageNumber,
+                    pageSize: action.pageSize,
+                    totalElements: action.totalElements,
+                    totalPages: action.totalPages,
+                    lastPage: action.lastPage,
                 },
             };
+
         default:
-            return state;
+            return {
+                ...state,
+            };
     }
 };
+
+export default productReducer;
