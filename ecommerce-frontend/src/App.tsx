@@ -3,9 +3,9 @@ import Products from "./components/Products";
 
 function App() {
     return (
-        <>
+        <section className="flex flex-col items-center justify-center pt-8">
             <Products />
-        </>
+        </section>
     );
 }
 
