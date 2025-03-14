@@ -21,6 +21,7 @@ const productReducer = (state = initialState, action: actionProps) => {
                 ...state,
                 products: action.content,
                 pagination: {
+                    ...state.pagination,
                     pageNumber: action.pageNumber,
                     pageSize: action.pageSize,
                     totalElements: action.totalElements,
@@ -33,6 +34,14 @@ const productReducer = (state = initialState, action: actionProps) => {
             return {
                 ...state,
                 categories: action.content,
+                pagination: {
+                    ...state.pagination,
+                    pageNumber: action.pageNumber,
+                    pageSize: action.pageSize,
+                    totalElements: action.totalElements,
+                    totalPages: action.totalPages,
+                    lastPage: action.lastPage,
+                },
             };
 
         default:
