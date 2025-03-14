@@ -1,6 +1,6 @@
 const initialState = {
     products: [],
-    categories: null,
+    categories: [],
     pagination: {},
 };
 
@@ -27,6 +27,12 @@ const productReducer = (state = initialState, action: actionProps) => {
                     totalPages: action.totalPages,
                     lastPage: action.lastPage,
                 },
+            };
+
+        case "FETCH_CATEGORIES":
+            return {
+                ...state,
+                categories: action.content,
             };
 
         default:
