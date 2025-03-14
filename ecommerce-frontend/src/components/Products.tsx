@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import fetchProducts from "../store/action";
 import { RootState } from "../store/reducer/store";
 import Filter from "./Filter";
+import useProductFilter from "./useProductFilter";
 
 // interface Product {
 //     productId: number;
@@ -27,9 +28,11 @@ const Products = () => {
     const { products } = useSelector((state: RootState) => state.products);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchProducts());
-    }, [dispatch]);
+    useProductFilter();
+
+    // useEffect(() => {
+    //     dispatch(fetchProducts());
+    // }, [dispatch]);
 
     return (
         <div className="lg:px-14 sm:px-8 px-4 2xl:w-[90%] 2xl::mx-auto">

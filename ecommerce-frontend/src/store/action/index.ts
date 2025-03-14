@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
 import api from "../../api/api";
 
-const fetchProducts = () => async (dispatch: Dispatch) => {
+const fetchProducts = (queryString: string) => async (dispatch: Dispatch) => {
     try {
         dispatch({ type: "IS_FETCHING" });
-        const { data } = await api.get(`public/products`);
+        const { data } = await api.get(`public/products?${queryString}`);
         // console.log("API Response: ", data);
 
         dispatch({
