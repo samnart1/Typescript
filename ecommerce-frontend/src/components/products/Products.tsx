@@ -9,19 +9,6 @@ import Loader from "../shared/Loader";
 import Paginations from "../shared/Paginations";
 import ProductCard from "../shared/ProductCard";
 
-// interface Product {
-//     productId: number;
-//     productName: string;
-//     image: string;
-//     description: string;
-//     quantity: number;
-//     price: number;
-//     discount: number;
-//     specialPrice: number;
-// }
-
-// http://localhost:8080/products?keyword=test&sortby=desc
-
 const Products = () => {
     const { isLoading, errorMessage } = useSelector(
         (state: RootState) => state.errors
@@ -30,6 +17,7 @@ const Products = () => {
     const { products, categories, pagination } = useSelector(
         (state: RootState) => state.products
     );
+    
     const dispatch = useDispatch();
 
     useProductFilter();
@@ -51,21 +39,21 @@ const Products = () => {
                     </span>
                 </div>
             ) : (
-                <>
-                    <div className="min-h-[700px]">
-                        <div className="pb-6 pt-14 grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-y-6 gap-x-6">
-                            {products &&
-                                products.map((item, index) => (
-                                    <ProductCard key={index} {...item} />
-                                ))}
-                        </div>
+                <div className="min-h-[700px]">
+                    <div className="pb-6 pt-14 grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-y-6 gap-x-6">
+                        {products &&
+                            products.map((item, index) => (
+                                <ProductCard key={index} {...item} />
+                            ))}
                     </div>
-                </>
+                    <div className="flex justify-center pt-10">
+                        <Paginations
+                            numberOfPages={pagination?.totalPages}
+                            totalProducts={pagination?.totalElements}
+                        />
+                    </div>
+                </div>
             )}
-            <Paginations
-                numberOfPages={pagination?.totalPages}
-                totalProducts={pagination?.totalElements}
-            />
         </div>
     );
 };
