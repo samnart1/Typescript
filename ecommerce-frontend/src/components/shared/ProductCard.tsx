@@ -13,6 +13,7 @@ interface productProp {
     discount: number;
     specialPrice: number;
     id?: number;
+    about?: boolean;
 }
 
 const defaultProduct: productProp = {
@@ -24,6 +25,7 @@ const defaultProduct: productProp = {
     price: 0,
     discount: 0,
     specialPrice: 0,
+    about: false,
 };
 
 const ProductCard = ({
@@ -35,6 +37,7 @@ const ProductCard = ({
     price,
     discount,
     specialPrice,
+    about,
 }: productProp) => {
     const [openProductViewModal, setOpenProductViewModal] = useState(false);
     const [selectedViewProduct, setSelectedViewProduct] =
@@ -43,8 +46,10 @@ const ProductCard = ({
     const isAvailable = quantity && Number(quantity) > 0;
 
     const handleProductView = (product: productProp) => {
-        setSelectedViewProduct({ ...product, id: product.productId });
-        setOpenProductViewModal(true);
+        if (!about) {
+            setSelectedViewProduct({ ...product, id: product.productId });
+            setOpenProductViewModal(true);
+        }
     };
 
     return (
@@ -95,38 +100,40 @@ const ProductCard = ({
                         {truncateText(description, 50)}
                     </p>
                 </div>
-                <div className="flex items-center justify-between">
-                    {/* className="flex justify-center items-center"  */}
-                    {specialPrice ? (
-                        <div className="flex flex-col">
-                            <span className="text-gray-700 line-through">
-                                ${Number(price).toFixed(2)}
-                            </span>
-                            <span className="text-xl font-bold text-slate-700">
-                                ${Number(specialPrice).toFixed(2)}
-                            </span>
-                        </div>
-                    ) : (
-                        <div>
-                            <span className="text-xl font-bold text-slate-700">
-                                {" "}
-                                ${Number(specialPrice).toFixed(2)}
-                            </span>
-                        </div>
-                    )}
-                    <button
-                        disabled={!isAvailable || btnLoader}
-                        onClick={() => {}}
-                        className={`bg-blue-500 ${
-                            isAvailable
-                                ? "opacity-100 hover:bg-blue-600 cursor-pointer"
-                                : "opacity-70"
-                        } text-white py-2 px-3 rounded-lg items-center transition-colors duration-300 w-36 flex justify-center`}
-                    >
-                        <FaShoppingCart className="mr-2" />
-                        {isAvailable ? "Add to Cart" : "Stock Out"}
-                    </button>
-                </div>
+                {!about && (
+                    <div className="flex items-center justify-between">
+                        {/* className="flex justify-center items-center"  */}
+                        {specialPrice ? (
+                            <div className="flex flex-col">
+                                <span className="text-gray-700 line-through">
+                                    ${Number(price).toFixed(2)}
+                                </span>
+                                <span className="text-xl font-bold text-slate-700">
+                                    ${Number(specialPrice).toFixed(2)}
+                                </span>
+                            </div>
+                        ) : (
+                            <div>
+                                <span className="text-xl font-bold text-slate-700">
+                                    {" "}
+                                    ${Number(specialPrice).toFixed(2)}
+                                </span>
+                            </div>
+                        )}
+                        <button
+                            disabled={!isAvailable || btnLoader}
+                            onClick={() => {}}
+                            className={`bg-blue-500 ${
+                                isAvailable
+                                    ? "opacity-100 hover:bg-blue-600 cursor-pointer"
+                                    : "opacity-70"
+                            } text-white py-2 px-3 rounded-lg items-center transition-colors duration-300 w-36 flex justify-center`}
+                        >
+                            <FaShoppingCart className="mr-2" />
+                            {isAvailable ? "Add to Cart" : "Stock Out"}
+                        </button>
+                    </div>
+                )}
                 <ProductViewModal
                     open={openProductViewModal}
                     setOpen={setOpenProductViewModal}
