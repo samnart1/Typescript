@@ -5,9 +5,7 @@ export const fetchProducts =
     (queryString: string) => async (dispatch: Dispatch) => {
         try {
             dispatch({ type: "IS_FETCHING" });
-            const { data } = await api.get(
-                `public/products?${queryString}`
-            );
+            const { data } = await api.get(`public/products?${queryString}`);
             // console.log("API Response: ", data);
 
             dispatch({
@@ -56,6 +54,26 @@ export const fetchCategories =
                     error?.response?.data?.message ||
                     "Failed to fetch products",
             });
+        }
+    };
+
+export const addToCart =
+    (data, qty = 1) =>
+    (dispatch, getState) => {
+        const { products } = getState.products;
+        const getProduct = products.find(
+            (item) => item.productId === data.productId
+        );
+
+        const isQuantityExist = getProduct.quantity >= qty;
+
+        if (isQuantityExist) {
+            dispatch({ type: "ADD_CART", payload: { ...data, quantity: qty } });
+            localStorage.setItem(
+                "cartItems",
+                JSON.stringify(getState().carts.cart)
+            );
+        } else {
         }
     };
 
