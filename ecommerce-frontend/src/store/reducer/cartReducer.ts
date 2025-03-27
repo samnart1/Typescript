@@ -32,7 +32,8 @@ export const cartReducer = (state = initialState, action) => {
                     cart: newCart,
                 };
             }
-    }
 
-    return state;
+        default:
+            return state;
+    }
 };
