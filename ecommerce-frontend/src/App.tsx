@@ -5,19 +5,24 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/shared/Navbar";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import { Toaster } from "react-hot-toast";
+import Cart from "./components/cart/Cart";
 
 function App() {
     return (
-        <section className="flex flex-col items-center justify-center pt-8 ">
+        // className="flex flex-col items-center justify-center pt-8 "
+        <section >
             <Router>
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/products" element={<Products />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />}/>
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/cart" element={<Cart />} />
                 </Routes>
             </Router>
+            <Toaster position="bottom-center" />
         </section>
     );
 }
