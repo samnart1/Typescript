@@ -17,7 +17,7 @@ const Products = () => {
     const { products, categories, pagination } = useSelector(
         (state: RootState) => state.products
     );
-    
+
     const dispatch = useDispatch();
 
     useProductFilter();
@@ -27,7 +27,9 @@ const Products = () => {
     }, [dispatch]);
 
     return (
-        <div className=" lg:px-14 sm:px-8 px-4 2xl:w-[90%] 2xl::mx-auto">
+        // lg:px-14 sm:px-8 px-4
+        // lg:px-14 sm:px-8 px-4 2xl:w-[90%] 2xl::mx-auto
+        <div className="lg:px-14 sm:px-8 px-4 mt-8">
             <Filter categories={categories ? categories : []} />
             {isLoading ? (
                 <Loader text="Please wait..." width="200" />

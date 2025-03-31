@@ -30,7 +30,9 @@ const HeroBanner = () => {
     if (!mounted) return null;
 
     return (
+        // sm:max-w-[720px]: md:max-w-[900px] lg:max-w-[1200px] xl:max-w-[1792px]
         <div className="sm:max-w-[720px]: md:max-w-[900px] lg:max-w-[1200px] xl:max-w-[1792px]">
+            {/* lg:px-14 sm:px-8 px-4 */}
             <Swiper
                 grabCursor={true}
                 autoplay={{

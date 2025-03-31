@@ -13,7 +13,9 @@ const Navbar = () => {
     const { cart } = useSelector((state) => state.carts);
 
     return (
-        <div className="h-[70px] bg-slate-800 text-white z-50 flex items-center sticky w-476 -mt-8 mb-5">
+        // lg:px-14 sm:px-8 px-4
+        // h-[70px] bg-slate-800 text-white z-50 flex items-center sticky w-476 -mt-8 mb-5
+        <div className="lg:px-14 sm:px-8 px-4 bg-slate-800 text-white z-50 h-[70px] flex items-center sticky ">
             <div className="lg:px-14 sm:px-8 px-4 w-full flex justify-between">
                 <Link to="/" className="flex items-center text-2xl font-bold">
                     <FaStore className="mr-2 text-3xl" />
