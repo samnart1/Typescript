@@ -11,11 +11,17 @@ const SetQuantity = ({
             {cardCounter ? null : <div className="font-semibold">QUANTITY</div>}
 
             <div className="flex md:flex-row flex-col gap-4 items-center lg:text-[22px] text-sm">
-                <button disabled={quantity <= 1} className={btnStyles}>
+                <button
+                    onClick={handleQtyDecrease}
+                    disabled={quantity <= 1}
+                    className={btnStyles}
+                >
                     -
                 </button>
                 <div className="text-red-500">{quantity}</div>
-                <button className={btnStyles}>+</button>
+                <button onClick={handleQtyIncrease} className={btnStyles}>
+                    +
+                </button>
             </div>
         </div>
     );

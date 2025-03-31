@@ -33,6 +33,34 @@ export const cartReducer = (state = initialState, action) => {
                 };
             }
 
+        case "INCREASE_QUANTITY":
+            return {
+                ...state,
+                cart: state.cart.map((item) =>
+                    item.productId === action.payload.productId
+                        ? { ...item, quantity: item.quantity + 1 }
+                        : item
+                ),
+            };
+
+        case "DECREASE_QUANTITY":
+            return {
+                ...state,
+                cart: state.cart.map((item) =>
+                    item.productId === action.payload.productId
+                        ? { ...item, quantity: item.quantity - 1 }
+                        : item
+                ),
+            };
+
+        case "REMOVE_CART":
+            return {
+                ...state,
+                cart: state.cart.filter(
+                    (item) => item.productId !== action.payload.productId
+                ),
+            };
+
         default:
             return state;
     }

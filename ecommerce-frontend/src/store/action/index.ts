@@ -83,4 +83,106 @@ export const addToCart =
         }
     };
 
+// toast, currentQuantity, setCurrentQuantity;
+
+export const increaseCartQuantity =
+    (data, toast, currentQuantity, setCurrentQuantity) =>
+    (dispatch, getState) => {
+        const { cart } = getState().carts;
+        const item = cart.find((item) => item.productId === data.productId);
+
+        console.log(data);
+        console.log(getState());
+
+        if (!item) {
+            console.error("Error: Item not found in cart", data);
+            toast.error("Item not found in cart!");
+            return;
+        }
+
+        const newQuantity = currentQuantity + 1;
+
+        setCurrentQuantity(newQuantity);
+
+        dispatch({
+            type: "INCREASE_QUANTITY",
+            payload: item,
+        });
+
+        localStorage.setItem(
+            "cartItems",
+            JSON.stringify(getState().carts.cart)
+        );
+
+        toast.success(`Increased ${data.productName} to ${newQuantity}!`);
+
+        // const isQuantityExist = getProduct.quantity >= currentQuantity + 1;
+
+        // if (!item) {
+        //     const newQuantity = currentQuantity + 1;
+        //     setCurrentQuantity(newQuantity);
+
+        //     dispatch({
+        //         type: "ADD_CART",
+        //         payload: { ...data, quantity: newQuantity },
+        //     });
+
+        //     localStorage.setItem(
+        //         "cartItems",
+        //         JSON.stringify(getState().carts.cart)
+        //     );
+
+        //     // toast.success("+1");
+        // } else {
+        //     toast.error("Quantity Reached to Limit!");
+        // }
+    };
+
+export const decreaseCartQuantity =
+    (data, toast, currentQuantity, setCurrentQuantity) =>
+    (dispatch, getState) => {
+        const { cart } = getState().carts;
+        const item = cart.find((item) => item.productId === data.productId);
+
+        if (!item) {
+            toast.error("Item not found in cart!");
+            return;
+        }
+
+        const newQuantity = currentQuantity - 1;
+        setCurrentQuantity(newQuantity);
+
+        dispatch({
+            type: "DECREASE_QUANTITY",
+            payload: item,
+        });
+
+        localStorage.setItem(
+            "cartItems",
+            JSON.stringify(getState().carts.cart)
+        );
+
+        toast.success(
+            `Decreased ${data.productName} from ${currentQuantity} to ${newQuantity}`
+        );
+    };
+
+export const removeFromCart = (data, toast) => (dispatch, getState) => {
+    const { cart } = getState().carts;
+    const item = cart.find((item) => item.productId === data.productId);
+
+    if (!item) {
+        toast.error("Item is not found in cart!");
+        return;
+    }
+
+    dispatch({
+        type: "REMOVE_CART",
+        payload: item,
+    });
+
+    toast.success(`${data.productName} removed from cart successfully!`);
+    localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
+};
+
 export default fetchProducts;
