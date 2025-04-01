@@ -59,7 +59,7 @@ export const fetchCategories =
 
 export const addToCart =
     (data, qty = 1, toast) =>
-    (dispatch, getState) => {
+    (dispatch: Dispatch, getState) => {
         const { products } = getState().products;
         const getProduct = products.find(
             (item) => item.productId === data.productId
@@ -87,7 +87,7 @@ export const addToCart =
 
 export const increaseCartQuantity =
     (data, toast, currentQuantity, setCurrentQuantity) =>
-    (dispatch, getState) => {
+    (dispatch: Dispatch, getState) => {
         const { cart } = getState().carts;
         const item = cart.find((item) => item.productId === data.productId);
 
@@ -140,7 +140,7 @@ export const increaseCartQuantity =
 
 export const decreaseCartQuantity =
     (data, toast, currentQuantity, setCurrentQuantity) =>
-    (dispatch, getState) => {
+    (dispatch: Dispatch, getState) => {
         const { cart } = getState().carts;
         const item = cart.find((item) => item.productId === data.productId);
 
@@ -167,22 +167,47 @@ export const decreaseCartQuantity =
         );
     };
 
-export const removeFromCart = (data, toast) => (dispatch, getState) => {
-    const { cart } = getState().carts;
-    const item = cart.find((item) => item.productId === data.productId);
+export const removeFromCart =
+    (data, toast) => (dispatch: Dispatch, getState) => {
+        const { cart } = getState().carts;
+        const item = cart.find((item) => item.productId === data.productId);
 
-    if (!item) {
-        toast.error("Item is not found in cart!");
-        return;
-    }
+        if (!item) {
+            toast.error("Item is not found in cart!");
+            return;
+        }
 
-    dispatch({
-        type: "REMOVE_CART",
-        payload: item,
-    });
+        dispatch({
+            type: "REMOVE_CART",
+            payload: item,
+        });
 
-    toast.success(`${data.productName} removed from cart successfully!`);
-    localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
-};
+        toast.success(`${data.productName} removed from cart successfully!`);
+        localStorage.setItem(
+            "cartItems",
+            JSON.stringify(getState().carts.cart)
+        );
+    };
+
+export const authenticateSignInUser =
+    (sendData, toast, reset, navigate, setLoader) =>
+    async (dispatch: Dispatch) => {
+        try {
+            setLoader(true);
+            const { data } = await api.post("/auth/signin", sendData);
+            dispatch({ type: "LOGIN_USER", payload: data });
+            localStorage.setItem("auth", JSON.stringify(data));
+            reset();
+            toast.success("Login Success!");
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+            toast.error(
+                error?.response?.data?.message || "Internal Server Error!"
+            );
+        } finally {
+            setLoader(false);
+        }
+    };
 
 export default fetchProducts;
