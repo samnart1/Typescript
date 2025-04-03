@@ -28,96 +28,97 @@ const Navbar = () => {
                         navbarOpen
                             ? "h-fit sm:pb-0 pb-5"
                             : "h-0 overflow-hidden"
-                    } transition-all duration-100 sm:h-fit sm:bg-none bg-slate-800 text-white sm:w-fit w-full sm:flex-row flex-col px-4 sm:px-0`}
-                ></ul>
-                <ul className="flex tex text-slate-800 gap-4">
-                    <li className="font-[500] transition-all duration-150">
-                        <Link
-                            to="/"
-                            className={`${
-                                path === "/"
-                                    ? "text-white font-semibold"
-                                    : "text-gray-200"
-                            }`}
-                        >
-                            Home
-                        </Link>
-                    </li>
-                    <li className="font-[500] transition-all duration-150">
-                        <Link
-                            to="/products"
-                            className={`${
-                                path === "/products"
-                                    ? "text-white font-semibold"
-                                    : "text-gray-200"
-                            }`}
-                        >
-                            Products
-                        </Link>
-                    </li>
-                    <li className="font-[500] transition-all duration-150">
-                        <Link
-                            to="/about"
-                            className={`${
-                                path === "/about"
-                                    ? "text-white font-semibold"
-                                    : "text-gray-200"
-                            }`}
-                        >
-                            About
-                        </Link>
-                    </li>
-                    <li className="font-[500] transition-all duration-150">
-                        <Link
-                            to="/contact"
-                            className={`${
-                                path === "/contact"
-                                    ? "text-white font-semibold"
-                                    : "text-gray-200"
-                            }`}
-                        >
-                            Contact
-                        </Link>
-                    </li>
-                    <li className="font-[500] transition-all duration-150">
-                        <Link
-                            to="/cart"
-                            className={`${
-                                path === "/cart"
-                                    ? "text-white font-semibold"
-                                    : "text-gray-200"
-                            }`}
-                        >
-                            <Badge
-                                showZero
-                                badgeContent={cart?.length || 0}
-                                color="primary"
-                                overlap="circular"
-                                anchorOrigin={{
-                                    vertical: "top",
-                                    horizontal: "right",
-                                }}
-                            >
-                                <FaShoppingCart size={25} />
-                            </Badge>
-                        </Link>
-                    </li>
-
-                    {user && user.id ? (
-                        <li className="font-[500] transition-all duration-150">
-                            <UserMenu />
-                        </li>
-                    ) : (
+                    } transition-all duration-100 sm:h-fit sm:bg-none bg-slate-800 text-white sm:w-fit w-full sm:flex-row flex-col px-4 sm:px-0 `}
+                >
+                    <ul className="flex text text-slate-800 gap-4 items-center">
                         <li className="font-[500] transition-all duration-150">
                             <Link
-                                to="/login"
-                                className="flex items-center space-x-2 px-4 py-[6px] bg-gradient-to-r from-purple-600 to-red-500 text-white font-semibold rounded-md shadow-lg hover:from-purple-500 hover:to-red-400 transition duration-300 ease-in-out transform"
+                                to="/"
+                                className={`${
+                                    path === "/"
+                                        ? "text-white font-semibold"
+                                        : "text-gray-200"
+                                }`}
                             >
-                                <FaSignInAlt />
-                                <span>Login</span>
+                                Home
                             </Link>
                         </li>
-                    )}
+                        <li className="font-[500] transition-all duration-150">
+                            <Link
+                                to="/products"
+                                className={`${
+                                    path === "/products"
+                                        ? "text-white font-semibold"
+                                        : "text-gray-200"
+                                }`}
+                            >
+                                Products
+                            </Link>
+                        </li>
+                        <li className="font-[500] transition-all duration-150">
+                            <Link
+                                to="/about"
+                                className={`${
+                                    path === "/about"
+                                        ? "text-white font-semibold"
+                                        : "text-gray-200"
+                                }`}
+                            >
+                                About
+                            </Link>
+                        </li>
+                        <li className="font-[500] transition-all duration-150">
+                            <Link
+                                to="/contact"
+                                className={`${
+                                    path === "/contact"
+                                        ? "text-white font-semibold"
+                                        : "text-gray-200"
+                                }`}
+                            >
+                                Contact
+                            </Link>
+                        </li>
+                        <li className="font-[500] transition-all duration-150">
+                            <Link
+                                to="/cart"
+                                className={`${
+                                    path === "/cart"
+                                        ? "text-white font-semibold"
+                                        : "text-gray-200"
+                                }`}
+                            >
+                                <Badge
+                                    showZero
+                                    badgeContent={cart?.length || 0}
+                                    color="primary"
+                                    overlap="circular"
+                                    anchorOrigin={{
+                                        vertical: "top",
+                                        horizontal: "right",
+                                    }}
+                                >
+                                    <FaShoppingCart size={25} />
+                                </Badge>
+                            </Link>
+                        </li>
+
+                        {user && user.id ? (
+                            <li className="font-[500] transition-all duration-150">
+                                <UserMenu />
+                            </li>
+                        ) : (
+                            <li className="font-[500] transition-all duration-150">
+                                <Link
+                                    to="/login"
+                                    className="flex items-center space-x-2 px-4 py-[6px] bg-gradient-to-r from-purple-600 to-red-500 text-white font-semibold rounded-md shadow-lg hover:from-purple-500 hover:to-red-400 transition duration-300 ease-in-out transform"
+                                >
+                                    <FaSignInAlt />
+                                    <span>Login</span>
+                                </Link>
+                            </li>
+                        )}
+                    </ul>
                 </ul>
                 <button
                     onClick={() => setNavbarOpen(!navbarOpen)}

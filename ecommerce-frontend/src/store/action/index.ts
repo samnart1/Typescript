@@ -1,5 +1,6 @@
 import { Dispatch } from "redux";
 import api from "../../api/api";
+import toast from "react-hot-toast";
 
 export const fetchProducts =
     (queryString: string) => async (dispatch: Dispatch) => {
@@ -209,5 +210,33 @@ export const authenticateSignInUser =
             setLoader(false);
         }
     };
+
+export const registerNewUser =
+    (sendData, toast, reset, navigate, setLoader) =>
+    async (dispatch: Dispatch) => {
+        try {
+            setLoader(true);
+            const { data } = await api.post("/auth/signup", sendData);
+            reset();
+            toast.success(data?.message || "User registered successfully!");
+            navigate("/login");
+        } catch (error) {
+            console.log();
+            toast.error(
+                error?.response?.data?.message ||
+                    error?.response?.data?.password ||
+                    "Internal server error"
+            );
+        } finally {
+            setLoader(false);
+        }
+    };
+
+export const logOutUser = (navigate) => (dispatch: Dispatch) => {
+    dispatch({ type: "LOG_OUT" });
+
+    localStorage.removeItem("auth");
+    navigate("/login");
+};
 
 export default fetchProducts;
