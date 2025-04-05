@@ -11,7 +11,7 @@ const AddressInfo = () => {
     const isLoading = false;
 
     const [openAddressModal, setOpenAddressModal] = useState(false);
-    const [selectAddress, setSelectedAddress] = useState("");
+    const [selectedAddress, setSelectedAddress] = useState("");
 
     const AddNewAddressHandler = () => {
         console.log("new handler, here i am!");
@@ -55,8 +55,14 @@ const AddressInfo = () => {
                 </div>
             )}
 
-            <AddressInfoModal open={openAddressModal} setOpen={setOpenAddressModal} children={undefined}>
-                <AddAddressForm />
+            <AddressInfoModal
+                open={openAddressModal}
+                setOpen={setOpenAddressModal}
+            >
+                <AddAddressForm
+                    address={selectedAddress}
+                    setOpenAddressModal={setOpenAddressModal}
+                />
             </AddressInfoModal>
         </div>
     );

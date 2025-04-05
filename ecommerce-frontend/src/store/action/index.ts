@@ -239,4 +239,23 @@ export const logOutUser = (navigate) => (dispatch: Dispatch) => {
     navigate("/login");
 };
 
+export const addUpdateUserAddress =
+    (sendData, toast, addressId, setOpenAddressModal) =>
+    async (dispatch: Dispatch, getState) => {
+        // const { user } = getState().auth;
+        dispatch({ type: "BUTTON_LOADER" });
+        try {
+            const { data } = await api.post("/addresses", sendData);
+            toast.success("Address saved successfully!");
+        } catch (error) {
+            console.log(error);
+            toast.error(
+                error?.response?.data?.message || "Internal server error!"
+            );
+            dispatch({ type: "IS_ERROR", payload: null });
+        } finally {
+            setOpenAddressModal(false);
+        }
+    };
+
 export default fetchProducts;
