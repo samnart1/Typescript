@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { FaAddressCard } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { addUpdateUserAddress } from "../../store/action";
+import { useState } from "react";
 // import { data } from "react-router-dom";
 
 const AddAddressForm = ({ address, setOpenAddressModal }) => {
@@ -18,7 +19,11 @@ const AddAddressForm = ({ address, setOpenAddressModal }) => {
         mode: "onTouched",
     });
 
-    const onSaveAddressHandler = async () => {
+    // const [data, setData] = useState({
+
+    // })
+
+    const onSaveAddressHandler = async (data) => {
         dispatch(
             addUpdateUserAddress(
                 data,
@@ -40,7 +45,7 @@ const AddAddressForm = ({ address, setOpenAddressModal }) => {
                 <div className="flex flex-col gap-4">
                     <InputField
                         label="Building Name"
-                        id="building"
+                        id="buildingName"
                         type="text"
                         errors={errors}
                         register={register}
