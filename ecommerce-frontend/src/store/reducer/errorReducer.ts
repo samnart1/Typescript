@@ -28,6 +28,9 @@ const errorReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 errorMessage: null,
+                btnLoader: false,
+                categoryError: null,
+                categoryLoader: false,
             };
 
         case "IS_ERROR":
@@ -35,6 +38,8 @@ const errorReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 errorMessage: action.payload,
+                btnLoader: false,
+                categoryLoader: false,
             };
 
         case "CATEGORY_SUCCESS":

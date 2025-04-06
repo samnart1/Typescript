@@ -259,4 +259,24 @@ export const addUpdateUserAddress =
         }
     };
 
+export const getUserAddresses = () => async (dispatch: Dispatch, getState) => {
+    try {
+        dispatch({ type: "IS_FETCHING" });
+        const { data } = await api.get(`/addresses`);
+        dispatch({
+            type: "USER_ADDRESS",
+            payload: data,
+        });
+        dispatch({ type: "IS_SUCCESS" });
+    } catch (error) {
+        console.log(error);
+        dispatch({
+            type: "IS_ERROR",
+            payload:
+                error?.response?.data?.message ||
+                "Failed to fetch user addresses",
+        });
+    }
+};
+
 export default fetchProducts;
