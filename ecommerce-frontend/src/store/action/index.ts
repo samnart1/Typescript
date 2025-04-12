@@ -279,4 +279,11 @@ export const getUserAddresses = () => async (dispatch: Dispatch, getState) => {
     }
 };
 
+export const selectUserCheckoutAddress = (address: any) => {
+    return {
+        type: "SELECT_CHECKOUT_ADDRESS",
+        payload: address,
+    }
+}
+
 export default fetchProducts;

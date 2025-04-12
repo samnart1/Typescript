@@ -6,7 +6,8 @@ import {
     FaTrash,
 } from "react-icons/fa";
 import { MdLocationCity, MdPinDrop, MdPublic } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserCheckoutAddress } from "../../store/action";
 
 const AddressList = ({
     addresses,
@@ -14,9 +15,11 @@ const AddressList = ({
     setOpenAddressModal,
 }) => {
     const dispatch = useDispatch();
-    const selectedUserAddress = addresses[3];
+    const selectedUserCheckoutAddress = useSelector((state) => state.auth);
 
-    const handleAddressSelection = (addresses: any) => {};
+    const handleAddressSelection = (addresses: any) => {
+        dispatch(selectUserCheckoutAddress(addresses));
+    };
 
     function onEditButtonHandler(address: any): void {
         setSelectedAddress(address);
@@ -34,7 +37,7 @@ const AddressList = ({
                     key={addresses.addressId}
                     onClick={() => handleAddressSelection(address)}
                     className={`p-4 border rounded-md cursor-pointer relative ${
-                        selectedUserAddress?.addressId === address.addressId
+                        selectedUserCheckoutAddress?.addressId === address.addressId
                             ? "bg-green-100"
                             : "bg-white"
                     }`}
@@ -49,7 +52,7 @@ const AddressList = ({
                                 <p className="font-semibold">
                                     {address.buildingName}
                                 </p>
-                                {selectedUserAddress?.addressId ===
+                                {selectedUserCheckoutAddress?.addressId ===
                                     address.addressId && (
                                     <FaCheckCircle className="text-green-500 ml-2" />
                                 )}
