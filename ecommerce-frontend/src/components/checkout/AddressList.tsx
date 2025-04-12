@@ -15,7 +15,7 @@ const AddressList = ({
     setOpenAddressModal,
 }) => {
     const dispatch = useDispatch();
-    const selectedUserCheckoutAddress = useSelector((state) => state.auth);
+    const { selectedUserCheckoutAddress } = useSelector((state) => state.auth);
 
     const handleAddressSelection = (addresses: any) => {
         dispatch(selectUserCheckoutAddress(addresses));
@@ -37,7 +37,8 @@ const AddressList = ({
                     key={addresses.addressId}
                     onClick={() => handleAddressSelection(address)}
                     className={`p-4 border rounded-md cursor-pointer relative ${
-                        selectedUserCheckoutAddress?.addressId === address.addressId
+                        selectedUserCheckoutAddress?.addressId ===
+                        address.addressId
                             ? "bg-green-100"
                             : "bg-white"
                     }`}
