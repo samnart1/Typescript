@@ -245,7 +245,12 @@ export const addUpdateUserAddress =
         // const { user } = getState().auth;
         dispatch({ type: "BUTTON_LOADER" });
         try {
-            const { data } = await api.post("/addresses", sendData);
+            if (!addressId) {
+                const { data } = await api.post("/addresses", sendData);
+            } else {
+                await api.putsrc/components/checkout/AddAddressForm.tsx(`/addresses/${addressId}`, sendData);
+            }
+            dispatch(getUserAddresses());
             toast.success("Address saved successfully!");
             dispatch({ type: "IS_SUCCESS" });
         } catch (error) {
@@ -283,7 +288,7 @@ export const selectUserCheckoutAddress = (address: any) => {
     return {
         type: "SELECT_CHECKOUT_ADDRESS",
         payload: address,
-    }
-}
+    };
+};
 
 export default fetchProducts;
