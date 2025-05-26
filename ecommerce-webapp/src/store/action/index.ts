@@ -248,7 +248,10 @@ export const addUpdateUserAddress =
             if (!addressId) {
                 const { data } = await api.post("/addresses", sendData);
             } else {
-                await api.putsrc/components/checkout/AddAddressForm.tsx(`/addresses/${addressId}`, sendData);
+                (await api.putsrc) /
+                    components /
+                    checkout /
+                    AddAddressForm.tsx(`/addresses/${addressId}`, sendData);
             }
             dispatch(getUserAddresses());
             toast.success("Address saved successfully!");
@@ -283,6 +286,35 @@ export const getUserAddresses = () => async (dispatch: Dispatch, getState) => {
         });
     }
 };
+
+export const deleteUserAddress =
+    (toast, addressId, setOpenDeleteModal) =>
+    async (dispatch: Dispatch, getState) => {
+        try {
+            dispatch({ type: "BUTTON_LOADER" });
+            await api.delete(`/addresses/${addressId}`);
+            dispatch({ type: "IS_SUCCESS" });
+            dispatch(getUserAddresses());
+            dispatch(clearCheckoutAddress());
+            toast.success("Address deleted successfully!");
+        } catch (error) {
+            console.log(error);
+            dispatch({
+                type: "IS_ERROR",
+                payload:
+                    error?.response?.data?.message ||
+                    "Failed to delete user address",
+            });
+        } finally {
+            setOpenDeleteModal(false)
+        }
+    };
+
+export const clearCheckoutAddress = () => {
+    return {
+        type: "REMOVE_CHECKOUT_ADDRESS", 
+    }
+}
 
 export const selectUserCheckoutAddress = (address: any) => {
     return {
