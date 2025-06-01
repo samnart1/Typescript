@@ -292,7 +292,7 @@ export const deleteUserAddress =
     async (dispatch: Dispatch, getState) => {
         try {
             dispatch({ type: "BUTTON_LOADER" });
-            await api.delete(`/addresses/${addressId}`);
+            await api.delete(`/address/${addressId}`);
             dispatch({ type: "IS_SUCCESS" });
             dispatch(getUserAddresses());
             dispatch(clearCheckoutAddress());
