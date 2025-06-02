@@ -5,10 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserAddresses } from "../../store/action";
 import toast from "react-hot-toast";
 import Skeleton from "../shared/Skeleton";
+import ErrorPage from "../shared/ErrorPage";
+import PaymentMethod from "./PaymentMethod";
+import OrderSummary from "./OrderSummary";
+import StripePayment from "./StripePayment";
+import Paypal from "./Paypal";
 
 export const Checkout = () => {
     const [activeStep, setActiveStep] = useState(0);
     const dispatch = useDispatch();
+
+    const { cart, totalPrice } = useSelector((state) => state.carts);
 
     const { isLoading, errorMessage } = useSelector((state) => state.errors);
 
@@ -22,24 +29,27 @@ export const Checkout = () => {
         dispatch(getUserAddresses());
     }, [dispatch]);
 
-    const paymentMethod = false;
+    // const paymentMethod = false;
+
+    const { paymentMethod } = useSelector((state) => state.payment);
 
     const handleBack = () => {
         setActiveStep((prevStep) => prevStep - 1);
     };
 
     const handleNext = () => {
-        if (activeStep === 0 && !selectedUserCheckoutAddress) {
-            toast.error("Please select checkout address before proceeding.");
-            return;
-        }
+        if (activeStep === 0) {
+            if (!selectedUserCheckoutAddress) {
+                toast.error(
+                    "Please select checkout address before proceeding."
+                );
+                return;
+            }
 
-        if (
-            activeStep === 0 &&
-            (!selectedUserCheckoutAddress || !paymentMethod)
-        ) {
-            toast.error("Please select payment method before proceeding.");
-            return;
+            // if (!paymentMethod) {
+            //     toast.error("Please select payment method before proceeding.");
+            //     return;
+            // }
         }
 
         setActiveStep((prevStep) => prevStep + 1);
@@ -57,11 +67,30 @@ export const Checkout = () => {
 
             {isLoading ? (
                 <div className="lg:w-[80%] mx-auto py-5">
-                    <Skeleton 
+                    <Skeleton />
                 </div>
             ) : (
                 <div className="mt-5">
                     {activeStep === 0 && <AddressInfo address={address} />}
+                    {activeStep === 1 && <PaymentMethod />}
+                    {activeStep === 2 && (
+                        <OrderSummary
+                            totalPrice={totalPrice}
+                            cart={cart}
+                            address={selectedUserCheckoutAddress}
+                            paymentMethod={paymentMethod}
+                        />
+                    )}
+                    {activeStep === 3 && (
+                        <>
+                            {" "}
+                            {paymentMethod === "Stripe" ? (
+                                <StripePayment />
+                            ) : (
+                                <Paypal />
+                            )}
+                        </>
+                    )}
                 </div>
             )}
 
@@ -103,6 +132,8 @@ export const Checkout = () => {
                     </button>
                 )}
             </div>
+
+            {errorMessage && <ErrorPage message={errorMessage} />}
         </div>
     );
 };

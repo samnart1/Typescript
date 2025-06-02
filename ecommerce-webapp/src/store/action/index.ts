@@ -306,21 +306,71 @@ export const deleteUserAddress =
                     "Failed to delete user address",
             });
         } finally {
-            setOpenDeleteModal(false)
+            setOpenDeleteModal(false);
         }
     };
 
 export const clearCheckoutAddress = () => {
     return {
-        type: "REMOVE_CHECKOUT_ADDRESS", 
-    }
-}
+        type: "REMOVE_CHECKOUT_ADDRESS",
+    };
+};
 
 export const selectUserCheckoutAddress = (address: any) => {
     return {
         type: "SELECT_CHECKOUT_ADDRESS",
         payload: address,
     };
+};
+
+export const addPaymentMethod = (method) => {
+    return {
+        type: "ADD_PAYMENT_METHOD",
+        payload: method,
+    };
+};
+
+export const createUserCart =
+    (sendCartItems) => async (dispatch: Dispatch, getState) => {
+        try {
+            dispatch({ type: "IS_FETCHING" });
+            await api.post("/cart/create", sendCartItems);
+            await dispatch(getUserCart());
+        } catch (error) {
+            console.log(error);
+            dispatch({
+                type: "IS_ERROR",
+                payload:
+                    error?.response?.data?.message ||
+                    "Failed to create cart items",
+            });
+        }
+    };
+
+export const getUserCart = () => async (dispatch: Dispatch, getState) => {
+    try {
+        dispatch({ type: "IS_FETCHING" });
+        const { data } = await api.get("/carts/users/cart");
+
+        dispatch({
+            type: "GET_USER_CART_PRODUCTS",
+            payload: data.products,
+            totalPrice: data.totalPrice,
+            cartId: data.cartId,
+        });
+        localStorage.setItem(
+            "cartItems",
+            JSON.stringify(getState().carts.cart)
+        );
+        dispatch({ type: "IS_SUCCESS" });
+    } catch (error) {
+        console.log(error);
+        dispatch({
+            type: "IS_ERROR",
+            payload:
+                error?.response?.data?.message || "Failed to fetch cart items",
+        });
+    }
 };
 
 export default fetchProducts;
